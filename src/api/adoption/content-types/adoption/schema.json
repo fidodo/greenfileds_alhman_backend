@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "adoptions",
+  "info": {
+    "singularName": "adoption",
+    "pluralName": "adoptions",
+    "displayName": "Adoption"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "message": {
+      "type": "string"
+    },
+    "adoptedAt": {
+      "type": "boolean"
+    },
+    "monthlyAmount": {
+      "type": "biginteger"
+    },
+    "cow": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cow.cow",
+      "inversedBy": "adoptions"
+    }
+  }
+}

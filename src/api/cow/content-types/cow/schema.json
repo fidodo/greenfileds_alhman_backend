@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cows",
+  "info": {
+    "singularName": "cow",
+    "pluralName": "cows",
+    "displayName": "Cow"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "breed": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "descriptionFI": {
+      "type": "blocks"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "isAvailable": {
+      "type": "boolean"
+    },
+    "maxAdopters": {
+      "type": "integer"
+    },
+    "monthlyCost": {
+      "type": "integer"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "currentAdopters": {
+      "type": "integer"
+    },
+    "adoptions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::adoption.adoption",
+      "mappedBy": "cow"
+    }
+  }
+}
