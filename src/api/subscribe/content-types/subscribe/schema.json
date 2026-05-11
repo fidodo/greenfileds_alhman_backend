@@ -10,5 +10,15 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "email": {
+      "type": "email"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "subscribedAt": {
+      "type": "datetime"
+    }
+  }
 }
