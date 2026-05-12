@@ -3,7 +3,10 @@ export default {
     try {
       const { query } = ctx;
       const cows = await strapi.db.query("api::cow.cow").findMany({
-        where: query.filters || {},
+        where: {
+          ...query.filters,
+          publishedAt: { $notNull: true }, // Only published cows
+        },
         populate: { image: true },
         orderBy: { name: "asc" },
       });
@@ -18,7 +21,10 @@ export default {
     try {
       const { id } = ctx.params;
       const cow = await strapi.db.query("api::cow.cow").findOne({
-        where: { id: parseInt(id) },
+        where: {
+          id: parseInt(id),
+          publishedAt: { $notNull: true }, // Only published cows
+        },
         populate: { image: true },
       });
 
