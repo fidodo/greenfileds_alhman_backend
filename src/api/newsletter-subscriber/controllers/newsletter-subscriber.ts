@@ -47,49 +47,45 @@
 //     }
 //   },
 // };
-"use strict";
-
-module.exports = {
+// src/api/newsletter/controllers/newsletter.ts
+export default {
   async subscribe(ctx) {
     try {
-      const { email } = ctx.request.body;
+      const { email } = ctx.request.body as { email: string };
 
       if (!email) {
         return ctx.badRequest("Email is required");
       }
 
-      // Check if already subscribed in the REAL collection
+      // Check if already subscribed
       const existing = await strapi.db
-        .query("api::newsletter-subscriber.newsletter-subscriber")
+        .query("api::subscriber.subscriber")
         .findOne({
           where: { email },
         });
 
       if (existing) {
-        return ctx.send({
-          success: false,
-          message: "This email is already subscribed!",
-        });
+        if (!existing.isActive) {
+          await strapi.db.query("api::subscriber.subscriber").update({
+            where: { id: existing.id },
+            data: { isActive: true, subscribedAt: new Date() },
+          });
+          return ctx.send({ success: true, message: "Welcome back!" });
+        }
+        return ctx.send({ success: false, message: "Already subscribed" });
       }
 
-      // Create new subscriber in the REAL collection
-      const newSubscriber = await strapi.db
-        .query("api::newsletter-subscriber.newsletter-subscriber")
-        .create({
-          data: {
-            email: email,
-            isActive: true,
-            subscribedAt: new Date(),
-            publishedAt: new Date(),
-          },
-        });
-
-      console.log("Saved to collection:", newSubscriber);
-
-      return ctx.send({
-        success: true,
-        message: "Thank you for subscribing!",
+      // Create new subscriber
+      await strapi.db.query("api::subscriber.subscriber").create({
+        data: {
+          email,
+          isActive: true,
+          subscribedAt: new Date(),
+          publishedAt: new Date(),
+        },
       });
+
+      return ctx.send({ success: true, message: "Thank you for subscribing!" });
     } catch (error) {
       console.error("Newsletter error:", error);
       return ctx.internalServerError("Something went wrong");
