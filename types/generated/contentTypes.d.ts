@@ -511,38 +511,6 @@ export interface ApiAdoptionAdoption extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiContactSubmissionContactSubmission
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'contact_submissions';
-  info: {
-    displayName: 'ContactSubmission';
-    pluralName: 'contact-submissions';
-    singularName: 'contact-submission';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    email: Schema.Attribute.Email;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::contact-submission.contact-submission'
-    > &
-      Schema.Attribute.Private;
-    message: Schema.Attribute.String;
-    name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    sentAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiCowCow extends Struct.CollectionTypeSchema {
   collectionName: 'cows';
   info: {
@@ -1259,7 +1227,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::adoption.adoption': ApiAdoptionAdoption;
-      'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::cow.cow': ApiCowCow;
       'api::event.event': ApiEventEvent;
       'api::feedback.feedback': ApiFeedbackFeedback;
