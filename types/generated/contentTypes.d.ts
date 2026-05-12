@@ -622,37 +622,6 @@ export interface ApiFeedbackFeedback extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiNewsletterSubscriberNewsletterSubscriber
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'newsletter_subscribers';
-  info: {
-    displayName: 'NewsletterSubscriber';
-    pluralName: 'newsletter-subscribers';
-    singularName: 'newsletter-subscriber';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    email: Schema.Attribute.Email;
-    isActive: Schema.Attribute.Boolean;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::newsletter-subscriber.newsletter-subscriber'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    subscribedAt: Schema.Attribute.Date;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiSubscriberSubscriber extends Struct.CollectionTypeSchema {
   collectionName: 'subscribers';
   info: {
@@ -1230,7 +1199,6 @@ declare module '@strapi/strapi' {
       'api::cow.cow': ApiCowCow;
       'api::event.event': ApiEventEvent;
       'api::feedback.feedback': ApiFeedbackFeedback;
-      'api::newsletter-subscriber.newsletter-subscriber': ApiNewsletterSubscriberNewsletterSubscriber;
       'api::subscriber.subscriber': ApiSubscriberSubscriber;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'plugin::content-releases.release': PluginContentReleasesRelease;
